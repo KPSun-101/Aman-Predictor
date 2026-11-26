@@ -7,6 +7,7 @@ HERO PHOTO: save a photo of a ripe Aman rice field as  hero.jpg  in the SAME fol
 (Optional) save a second photo as  about.jpg  for the "About Aman Rice" page.
 Without them the site shows a golden-green gradient instead.
 """
+import os
 from pathlib import Path
 
 import numpy as np
@@ -29,8 +30,10 @@ def first_existing(*candidates):
 # ------------------------------------------------------------------
 # CONFIG - file paths (edit if needed)
 # ------------------------------------------------------------------
-DATA_FILE = first_existing(r"D:\Rice Reaserch\Rice+JJAS(total_rain).csv")
-RESULTS_FILE = first_existing(r"D:\Project Purpose\Temperature_Feature_Comparison.csv")
+DATA_FILE = first_existing(r"D:\Rice Reaserch\Rice+JJAS(total_rain).csv",
+                           BASE / "data" / "Rice+JJAS(total_rain).csv")
+RESULTS_FILE = first_existing(r"D:\Project Purpose\Temperature_Feature_Comparison.csv",
+                              BASE / "data" / "Temperature_Feature_Comparison.csv")
 WB_FILE = first_existing(
     r"D:\Rice Reaserch\World_Bank_JJAS_2023_2100.csv",
     r"D:\Project Purpose\World_Bank_JJAS_2023_2100.csv",
@@ -997,4 +1000,4 @@ if __name__ == "__main__":
     print(f"Trained on {len(hist)} rows ({FIRST_YEAR}-{TRAIN_END}); World Bank rows: {len(wb)}")
     print("\nOpen on this computer :  http://127.0.0.1:5000")
     print(f"Open on your phone    :  http://{lan_ip()}:5000   (same Wi-Fi)\n")
-    app.run(host="0.0.0.0", debug=False, port=5000)
+    app.run(host="0.0.0.0", debug=False, port=int(os.environ.get("PORT", 5000)))
